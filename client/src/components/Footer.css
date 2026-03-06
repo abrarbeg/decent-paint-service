@@ -1,0 +1,127 @@
+/* Footer main container */
+.footer {
+  background: #0f172a;  /* match the darkest shade from gallery */
+  color: #ffffff;
+  width: 100%;
+  margin-top: 0;        /* ensure no extra top margin */
+  padding: 0;
+}
+
+/* Special pages that might need margin (if any) - adjust as needed */
+.footer-with-margin {
+  margin-top: 0;        /* reset if previously set */
+}
+
+/* Footer container */
+.footer-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px 20px;
+}
+
+/* Brand Section */
+.footer-brand-section {
+  text-align: center;
+}
+
+.footer-brand-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.footer-logo .logo-icon {
+  font-size: 2rem;
+  color: #667eea;       /* accent color */
+}
+
+.footer-logo h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.footer-tagline {
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 600px;
+  margin: 0 auto 25px;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Social Links */
+.footer-social {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 1.3rem;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transform: translateY(-5px);
+  color: #ffffff;
+}
+
+/* Footer Bottom Bar */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px 0;
+}
+
+.footer-bottom-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+}
+
+.footer-credit {
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .footer-bottom-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-logo h3 {
+    font-size: 1.5rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.95rem;
+    padding: 0 15px;
+  }
+}

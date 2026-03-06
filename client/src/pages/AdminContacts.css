@@ -1,0 +1,298 @@
+/* ===================================
+   Admin Panel - Contacts / Messages
+   =================================== */
+
+/* Contact Filters Top Bar */
+.contact-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 12px 24px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.filter-btn:hover {
+  border-color: var(--primary-blue);
+  color: var(--primary-blue);
+}
+
+.filter-btn.active {
+  background: var(--primary-gradient);
+  color: white;
+  border-color: transparent;
+}
+
+/* Action Buttons (Mark All / Delete All) */
+.mark-all-btn {
+  padding: 12px 24px;
+  background: var(--success-gradient);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.mark-all-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 74, 173, 0.4);
+}
+
+.delete-all-btn {
+  padding: 12px 24px;
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.delete-all-btn:hover {
+  background: #ef4444;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+/* Unread Count Badge */
+.unread-badge {
+  display: inline-block;
+  background: var(--accent-gradient);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+/* Contacts List Layout */
+.contacts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Individual Contact Card */
+.contact-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  padding: 28px;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+
+.contact-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(0, 74, 173, 0.3);
+}
+
+.contact-card.unread {
+  border-left: 5px solid var(--primary-blue);
+  background: rgba(0, 74, 173, 0.1);
+}
+
+/* Card Header Section */
+.contact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.contact-avatar {
+  width: 50px;
+  height: 50px;
+  background: var(--primary-gradient);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+  position: relative;
+}
+
+.contact-avatar .unread-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 14px;
+  height: 14px;
+  background: var(--accent-gradient);
+  border-radius: 50%;
+  border: 2px solid var(--dark-bg);
+}
+
+.contact-info {
+  flex: 1;
+  margin-left: 16px;
+  text-align: left;
+}
+
+.contact-info h3 {
+  margin: 0 0 8px;
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.contact-info p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* Phone and Date meta tags */
+.contact-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.contact-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.contact-date {
+  color: var(--text-muted);
+  font-size: 13px;
+  background: var(--glass-bg);
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Service Type Tag */
+.service-tag {
+  background: rgba(0, 74, 173, 0.2);
+  color: var(--primary-blue);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+/* Message Content Box */
+.contact-message {
+  padding: 18px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.contact-message p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Card Footer Actions */
+.contact-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.read-btn {
+  padding: 12px 24px;
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.read-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Empty State / No Messages */
+.no-messages {
+  text-align: center;
+  padding: 80px 40px;
+  background: var(--glass-bg);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+}
+
+.no-messages .empty-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.no-messages p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 16px;
+}
+
+.no-messages .hint {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-top: 12px;
+}
+
+/* Responsive adjustment for header actions */
+@media (max-width: 768px) {
+  .contact-filters {
+    flex-direction: column;
+  }
+  
+  .filter-btn, .mark-all-btn, .delete-all-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .contact-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .contact-info {
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,117 @@
+/* ===================================
+   Add New Service / Form Modal Styles
+   (FIXED FOR SCROLLING & VISIBILITY)
+   =================================== */
+
+.form-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px; /* Added padding so modal doesn't touch screen edges */
+    animation: fadeIn 0.3s;
+}
+
+.form-modal-content {
+    background: var(--dark-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 480px;
+    
+    /* FIX 1: Limit height and use Flexbox */
+    max-height: 90vh; 
+    display: flex;
+    flex-direction: column; 
+    
+    box-shadow: var(--shadow-lg);
+    animation: slideUp 0.3s;
+    overflow: hidden; /* Ensures child scrolling works correctly */
+}
+
+/* FIX 2: Ensure Header stays at the top */
+.form-modal-content h2 {
+    padding: 30px 35px 20px;
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 22px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* FIX 3: This is the most important part! 
+   It makes only the form fields scrollable */
+.form-modal-body {
+    padding: 25px 35px;
+    overflow-y: auto; /* Enable vertical scroll */
+    flex-grow: 1;    /* Take up available space */
+}
+
+/* Custom Scrollbar for better look */
+.form-modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+.form-modal-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+/* FIX 4: Footer stays at the bottom */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    padding: 20px 35px 30px;
+    background: var(--dark-card);
+    border-top: 1px solid var(--border-color);
+}
+
+/* --- Rest of your styling remains the same --- */
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    padding: 15px 18px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    box-sizing: border-box;
+}
+
+.save-btn, .cancel-btn {
+    flex: 1;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.save-btn {
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.cancel-btn {
+    background: var(--glass-bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+

@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #ffffff;
+  color: #333;
+  line-height: 1.6;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px; 
+  height: 80px;    
+  background: #ffffff;
+  position: fixed; 
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.navbar-logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #004aad; 
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo span {
+  color: #ff9800; /* Contrast Orange */
+  margin-left: 5px;
+}
+
+/* 3. Navigation Links */
+.navbar nav {
+  display: flex;
+  align-items: center;
+}
+
+.navbar nav a {
+  margin-left: 30px;
+  color: #444;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Hover Effect: Nice underline */
+.navbar nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: #ff9800;
+  transition: width 0.3s ease;
+}
+
+.navbar nav a:hover::after {
+  width: 100%;
+}
+
+.navbar nav a:hover {
+  color: #ff9800;
+}
+
+/* 4. Page Spacing Fix 
+   This ensures that your Hero, About, Gallery, and Contact 
+   content starts BELOW the navbar instead of under it. */
+main, .hero, .about-container, .gallery-container, .contact-container {
+  padding-top: 80px; 
+}
+
+/* 5. Utility Button (Optional: for a 'Get Quote' button in nav) */
+.nav-cta {
+  background: #004aad;
+  color: white !important;
+  padding: 8px 20px;
+  border-radius: 5px;
+  margin-left: 30px;
+}
+
+.nav-cta:hover {
+  background: #003580;
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   MODERN FOOTER STYLES
+   ======================================== */
+
+.footer {
+  background: #0f172a;
+  color: #fff;
+  padding: 25px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0284c7, #0d9488, #0284c7);
+}
+
+.footer.footer-with-margin {
+  margin-top: 0;
+}
+
+.footer-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 25px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  text-align: center;
+}
+
+/* Brand Section */
+.footer-brand-section {
+  padding-right: 0;
+}
+
+.footer-brand-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-brand-centered .footer-logo {
+  justify-content: center;
+}
+
+.footer-brand-centered .footer-tagline {
+  max-width: 500px;
+  text-align: center;
+}
+
+.footer-brand-centered .footer-social {
+  justify-content: center;
+}
+
+.footer-brand-section .footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.footer-brand-section .logo-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #0284c7, #0d9488);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.footer-brand-section .footer-logo h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.footer-tagline {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  max-width: 300px;
+}
+
+.footer-brand-section .footer-social {
+  display: flex;
+  gap: 12px;
+}
+
+.footer-brand-section .footer-social a {
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-brand-section .footer-social a:hover {
+  background: linear-gradient(135deg, #0284c7, #0d9488);
+  transform: translateY(-3px);
+  border-color: transparent;
+}
+
+/* Bottom Bar */
+.footer-bottom {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px 0;
+  margin-top: 40px;
+}
+
+.footer-bottom-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-bottom p {
+  color: #64748b;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.footer-bottom strong {
+  color: #38bdf8;
+}
+
+.footer-credit {
+  font-size: 0.8rem !important;
+  color: #475569 !important;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
+  .footer-brand-section {
+    text-align: center;
+  }
+  
+  .footer-tagline {
+    max-width: 100%;
+  }
+  
+  .footer-brand-section .footer-social {
+    justify-content: center;
+  }
+  
+  .footer-bottom-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+}
