@@ -45,7 +45,9 @@ router.post('/add', upload.single('image'), async (req, res) => {
             return res.status(400).json({ error: "Please upload an image" });
         }
 
-        const imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+        // In your POST /add or PUT /:id route, after file upload
+        const baseUrl = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 5000}`;
+        const imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
 
         const newService = new Service({
             title,
@@ -77,7 +79,9 @@ router.put('/:id', upload.single('image'), async (req, res) => {
                     fs.unlinkSync(oldPath);
                 }
             }
-            updateData.imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+            // Determine the base URL dynamically
+            const baseUrl = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 5000}`;
+            updateData.imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
         }
 
         const updatedService = await Service.findByIdAndUpdate(
