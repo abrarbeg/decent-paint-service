@@ -28,7 +28,7 @@ app.use('/api/bookings', require('./routes/bookingRoutes'));
 app.use('/api/services', require('./routes/serviceRoutes'));
 app.use('/api/gallery', require('./routes/galleryRoutes')); // Gallery routes (images)
 app.use('/api/videos', videoRoutes); // ✅ Video routes now under /api/videos
-
+app.use('/uploads', express.static('uploads'));
 // Root route
 app.get('/', (req, res) => {
   res.send('🚀 Decent Paint API is running');
