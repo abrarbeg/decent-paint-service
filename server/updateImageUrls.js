@@ -9,7 +9,7 @@ const Video = require('./models/Video');
 // Add any other models that may store image URLs (e.g., a Project model)
 
 // 🔴 REPLACE THIS WITH YOUR ACTUAL LIVE BACKEND URL
-const LIVE_BACKEND_URL = 'https://decent-paint-backend.onrender.com'; // no trailing slash
+const LIVE_BACKEND_URL = 'https://decent-paint-service.onrender.com'; // no trailing slash
 
 // The old base URL(s) to replace – include both localhost variants you've used
 const OLD_URLS = [
