@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
-const videoRoutes = require("./routes/videoRoutes"); // ✅ Video routes
+const videoRoutes = require("./routes/videoRoutes");
 require('dotenv').config();
 
 const app = express();
@@ -26,12 +26,22 @@ app.use('/uploads', express.static(uploadsDir));
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/bookings', require('./routes/bookingRoutes'));
 app.use('/api/services', require('./routes/serviceRoutes'));
-app.use('/api/gallery', require('./routes/galleryRoutes')); // Gallery routes (images)
-app.use('/api/videos', videoRoutes); // ✅ Video routes now under /api/videos
-app.use('/uploads', express.static('uploads'));
+app.use('/api/gallery', require('./routes/galleryRoutes'));
+app.use('/api/videos', videoRoutes);
+
 // Root route
 app.get('/', (req, res) => {
   res.send('🚀 Decent Paint API is running');
+});
+
+// 🌟 GLOBAL ERROR HANDLER – MUST BE AFTER ALL ROUTES
+app.use((err, req, res, next) => {
+  console.error('🔥 Global error handler caught:', err);
+  res.status(500).json({ 
+    error: err.message || 'Internal server error',
+    // Optionally include stack trace in development
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
 });
 
 // DB Connection
