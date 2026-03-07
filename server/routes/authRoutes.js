@@ -30,6 +30,7 @@ router.post('/login', async (req, res) => {
       user: admin.username
     });
   } catch (err) {
+    console.error("🔥 Login error:", err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -42,11 +43,16 @@ router.post('/forgot-password', async (req, res) => {
       return res.status(400).json({ error: 'Email is required' });
     }
 
+    console.log("🔍 Forgot password requested for:", email);
+
     const admin = await Admin.findOne({ email });
     if (!admin) {
       // Don't reveal if email exists
+      console.log("⚠️ Admin not found with email:", email);
       return res.json({ message: 'If that email exists, a reset link has been sent.' });
     }
+
+    console.log("✅ Admin found:", admin.email);
 
     // Delete any existing tokens for this admin
     await PasswordResetToken.deleteMany({ adminId: admin._id });
@@ -62,16 +68,25 @@ router.post('/forgot-password', async (req, res) => {
     });
 
     const resetLink = `${process.env.FRONTEND_URL}/admin/reset-password?token=${token}`;
-    await sendResetEmail(admin.email, resetLink);
+    console.log("📧 Attempting to send email to:", admin.email);
+
+    try {
+      await sendResetEmail(admin.email, resetLink);
+      console.log("✅ Email sent successfully");
+    } catch (emailErr) {
+      console.error("❌ Email sending failed:", emailErr);
+      // Still return success to the client (security), but log the error
+      // You may want to notify yourself via another channel
+    }
 
     res.json({ message: 'If that email exists, a reset link has been sent.' });
   } catch (err) {
-    console.error('Forgot password error:', err);
+    console.error('🔥 Forgot password error:', err);
     res.status(500).json({ error: 'Failed to process request' });
   }
 });
 
-// -------------------- RESET PASSWORD (FIXED) --------------------
+// -------------------- RESET PASSWORD --------------------
 router.post('/reset-password', async (req, res) => {
   try {
     const { token, newPassword } = req.body;
@@ -94,7 +109,7 @@ router.post('/reset-password', async (req, res) => {
       return res.status(400).json({ error: 'Admin not found' });
     }
 
-    // ✅ Assign plain password – the model's pre-save hook will hash it
+    // Assign plain password – the model's pre-save hook will hash it
     admin.password = newPassword;
     await admin.save();
 
@@ -103,7 +118,7 @@ router.post('/reset-password', async (req, res) => {
 
     res.json({ message: 'Password updated successfully. You can now login.' });
   } catch (err) {
-    console.error('Reset password error:', err);
+    console.error('🔥 Reset password error:', err);
     res.status(500).json({ error: 'Failed to reset password' });
   }
 });
