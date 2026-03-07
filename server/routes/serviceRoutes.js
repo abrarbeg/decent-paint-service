@@ -1,30 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 const Service = require('../models/Service');
-
-// 1. Create 'uploads' folder if it doesn't exist
-const uploadDir = 'uploads';
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
-}
-
-// 2. Configure Multer Storage
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/'); 
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname);
-    }
-});
-
-const upload = multer({ 
-    storage: storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
-});
+const { storage } = require('../config/cloudinary'); // Cloudinary storage
+const upload = multer({ storage }); // Use Cloudinary storage
 
 // GET: Fetch all services
 router.get('/all', async (req, res) => {
@@ -45,9 +24,8 @@ router.post('/add', upload.single('image'), async (req, res) => {
             return res.status(400).json({ error: "Please upload an image" });
         }
 
-        // In your POST /add or PUT /:id route, after file upload
-        const baseUrl = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 5000}`;
-        const imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
+        // Cloudinary returns the secure URL in req.file.path
+        const imageUrl = req.file.path;
 
         const newService = new Service({
             title,
@@ -71,17 +49,8 @@ router.put('/:id', upload.single('image'), async (req, res) => {
         let updateData = { title, description, category, price };
 
         if (req.file) {
-            const oldService = await Service.findById(req.params.id);
-            if (oldService && oldService.imageUrl) {
-                const oldFilename = oldService.imageUrl.split('/').pop();
-                const oldPath = path.join(__dirname, '../uploads', oldFilename);
-                if (fs.existsSync(oldPath)) {
-                    fs.unlinkSync(oldPath);
-                }
-            }
-            // Determine the base URL dynamically
-            const baseUrl = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 5000}`;
-            updateData.imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
+            // If you want to delete the old image from Cloudinary, you can add logic here
+            updateData.imageUrl = req.file.path;
         }
 
         const updatedService = await Service.findByIdAndUpdate(
@@ -101,16 +70,12 @@ router.delete('/:id', async (req, res) => {
         const service = await Service.findById(req.params.id);
         if (!service) return res.status(404).json({ error: "Service not found" });
 
-        if (service.imageUrl) {
-            const filename = service.imageUrl.split('/').pop();
-            const filePath = path.join(__dirname, '../uploads', filename);
-            if (fs.existsSync(filePath)) {
-                fs.unlinkSync(filePath);
-            }
-        }
+        // Optionally delete image from Cloudinary (uncomment if you want to clean up)
+        // const publicId = service.imageUrl.split('/').pop().split('.')[0];
+        // await cloudinary.uploader.destroy(`decent-paint/${publicId}`);
 
         await Service.findByIdAndDelete(req.params.id);
-        res.json({ message: "Service and image deleted successfully" });
+        res.json({ message: "Service deleted successfully" });
     } catch (err) {
         res.status(500).json({ error: "Delete failed" });
     }
