@@ -11,6 +11,7 @@ router.get('/all', async (req, res) => {
         const services = await Service.find().sort({ createdAt: -1 });
         res.status(200).json(services);
     } catch (err) {
+        console.error('❌ Error fetching services:', err);
         res.status(500).json({ error: "Failed to fetch services" });
     }
 });
@@ -18,6 +19,9 @@ router.get('/all', async (req, res) => {
 // POST: Add new service
 router.post('/add', upload.single('image'), async (req, res) => {
     try {
+        console.log('📦 req.file:', req.file);
+        console.log('📦 req.body:', req.body);
+
         const { title, description, category, price } = req.body;
         
         if (!req.file) {
@@ -36,20 +40,25 @@ router.post('/add', upload.single('image'), async (req, res) => {
         });
 
         const savedService = await newService.save();
+        console.log('✅ Service saved:', savedService.title);
         res.status(201).json(savedService);
     } catch (err) {
-        res.status(400).json({ error: "Error creating service: " + err.message });
+        console.error('🔥 Error creating service:', err);
+        res.status(500).json({ error: "Error creating service: " + err.message });
     }
 });
 
 // PUT: Update service
 router.put('/:id', upload.single('image'), async (req, res) => {
     try {
+        console.log('📦 Update - req.file:', req.file);
+        console.log('📦 Update - req.body:', req.body);
+
         const { title, description, category, price } = req.body;
         let updateData = { title, description, category, price };
 
         if (req.file) {
-            // If you want to delete the old image from Cloudinary, you can add logic here
+            // Optionally delete old image from Cloudinary here (advanced)
             updateData.imageUrl = req.file.path;
         }
 
@@ -58,9 +67,11 @@ router.put('/:id', upload.single('image'), async (req, res) => {
             updateData,
             { new: true }
         );
+        console.log('✅ Service updated:', updatedService.title);
         res.json(updatedService);
     } catch (err) {
-        res.status(400).json({ error: "Update failed: " + err.message });
+        console.error('🔥 Update failed:', err);
+        res.status(500).json({ error: "Update failed: " + err.message });
     }
 });
 
@@ -70,13 +81,15 @@ router.delete('/:id', async (req, res) => {
         const service = await Service.findById(req.params.id);
         if (!service) return res.status(404).json({ error: "Service not found" });
 
-        // Optionally delete image from Cloudinary (uncomment if you want to clean up)
+        // Optional: Delete image from Cloudinary (requires cloudinary import)
         // const publicId = service.imageUrl.split('/').pop().split('.')[0];
         // await cloudinary.uploader.destroy(`decent-paint/${publicId}`);
 
         await Service.findByIdAndDelete(req.params.id);
+        console.log('✅ Service deleted:', service.title);
         res.json({ message: "Service deleted successfully" });
     } catch (err) {
+        console.error('🔥 Delete failed:', err);
         res.status(500).json({ error: "Delete failed" });
     }
 });
