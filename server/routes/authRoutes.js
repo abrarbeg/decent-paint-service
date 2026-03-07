@@ -35,7 +35,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// -------------------- FORGOT PASSWORD --------------------
+// -------------------- FORGOT PASSWORD (Optimized) --------------------
 router.post('/forgot-password', async (req, res) => {
   try {
     const { email } = req.body;
@@ -47,7 +47,7 @@ router.post('/forgot-password', async (req, res) => {
 
     const admin = await Admin.findOne({ email });
     if (!admin) {
-      // Don't reveal if email exists
+      // Don't reveal if email exists (security)
       console.log("⚠️ Admin not found with email:", email);
       return res.json({ message: 'If that email exists, a reset link has been sent.' });
     }
@@ -68,18 +68,18 @@ router.post('/forgot-password', async (req, res) => {
     });
 
     const resetLink = `${process.env.FRONTEND_URL}/admin/reset-password?token=${token}`;
-    console.log("📧 Attempting to send email to:", admin.email);
+    console.log("📧 Reset link generated:", resetLink);
 
-    try {
-      await sendResetEmail(admin.email, resetLink);
-      console.log("✅ Email sent successfully");
-    } catch (emailErr) {
-      console.error("❌ Email sending failed:", emailErr);
-      // Still return success to the client (security), but log the error
-      // You may want to notify yourself via another channel
-    }
+    // 🔥 Send email asynchronously – do NOT await
+    // This makes the response immediate while email sends in background
+    sendResetEmail(admin.email, resetLink).catch(emailErr => {
+      console.error("❌ Background email sending failed:", emailErr);
+      // You could implement a retry or alert here
+    });
 
+    // Respond immediately
     res.json({ message: 'If that email exists, a reset link has been sent.' });
+
   } catch (err) {
     console.error('🔥 Forgot password error:', err);
     res.status(500).json({ error: 'Failed to process request' });
