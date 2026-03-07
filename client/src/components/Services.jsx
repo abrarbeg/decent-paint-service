@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./Services.css";
 import { FaCheckCircle } from "react-icons/fa";
 import { API_BASE_URL } from "../config"; 
+import { Link } from "react-router-dom";
 
 function Services() {
   const [services, setServices] = useState([]);
@@ -76,10 +77,7 @@ function Services() {
                     {item.category || "General"}
                   </div>
                   
-                  {/* LINE-BY-LINE FIX: 
-                    We use a logical OR (||) check in case your database field 
-                    is named 'cost' or 'price'. We also ensure it's not undefined.
-                  */}
+                  {/* Price Badge */}
                   {(item.price || item.cost) && (
                     <div className="price-badge">
                       {item.price || item.cost}
@@ -100,13 +98,14 @@ function Services() {
                     ))}
                   </ul>
 
-                  <a 
-                    href="/contact" 
+                  {/* ✅ Fixed: Use Link instead of <a> */}
+                  <Link 
+                    to="/contact" 
                     className="card-cta" 
                     style={{ background: accentColor }}
                   >
                     Get Free Quote
-                  </a>
+                  </Link>
                 </div>
               </div>
             );
